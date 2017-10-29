@@ -1,0 +1,4 @@
+myindexd_catalog_homepage:
+    path:     /test
+    defaults: { _controller: MyindexdCatalogBundle:Catalog:index }
+    methods: [GET]

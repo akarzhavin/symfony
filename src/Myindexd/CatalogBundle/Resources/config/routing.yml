@@ -1,4 +1,19 @@
 myindexd_catalog_homepage:
-    path:     /test
+    path:     /
     defaults: { _controller: MyindexdCatalogBundle:Catalog:index }
+    methods: [GET]
+
+myindexd_catalog_contacts:
+    path:     /contacts
+    defaults: { _controller: MyindexdCatalogBundle:Catalog:contacts }
+    methods: [GET, POST]
+
+myindexd_catalog_productpage:
+    path:     /{slug}.html
+    defaults: { _controller: MyindexdCatalogBundle:Catalog:product }
+    methods: [GET]
+
+myindexd_catalog_categorypage:
+    path:     /{slug}
+    defaults: { _controller: MyindexdCatalogBundle:Catalog:category }
     methods: [GET]

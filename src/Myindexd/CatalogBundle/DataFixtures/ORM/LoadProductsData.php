@@ -24,7 +24,7 @@ class LoadProductsData extends AbstractFixture implements FixtureInterface
 
             $product->addCategory($categories[mt_rand(0, count($categories) - 1)]);
             $manager->persist($product);
-            $manager->flush();
         }
+        $manager->flush();
     }
 }

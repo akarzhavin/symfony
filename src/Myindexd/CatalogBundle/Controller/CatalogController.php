@@ -22,10 +22,13 @@ class CatalogController extends Controller
     public function productAction(string $slug)
     {
         $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('MyindexdCatalogBundle:Category')->findAll();
+        $data['categories'] = $categories;
+
         $product = $em->getRepository('MyindexdCatalogBundle:Product')->findBy(['slug' => $slug]);
 
         if(count($product) == 1){
-            $data['product'] = $product;
+            $data['product'] = $product[0];
             return $this->render('MyindexdCatalogBundle:Default:product.html.twig', $data);
         } else {
             return $this->render('MyindexdCatalogBundle:Default:error404.html.twig');
@@ -35,10 +38,14 @@ class CatalogController extends Controller
     public function categoryAction(string $slug)
     {
         $em = $this->getDoctrine()->getManager();
-        $category = $em->getRepository('MyindexdCatalogBundle:Category')->findBy(['slug' => $slug]);
+        $categories = $em->getRepository('MyindexdCatalogBundle:Category')->findAll();
+        $category = array_filter($categories, function($element) use ($slug){
+            return $element->getSlug() == $slug;
+        });
+        $data['categories'] = $categories;
 
         if(count($category) == 1){
-            $category = $category[0];
+            $category = array_pop($category);
             $category->getProducts();
             $data['category'] = $category;
             return $this->render('MyindexdCatalogBundle:Default:category.html.twig', $data);
@@ -47,7 +54,23 @@ class CatalogController extends Controller
         }
     }
 
-    public function contactsAction(Request $request)
+    public function contactsShowAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $categories = $em->getRepository('MyindexdCatalogBundle:Category')->findAll();
+        $data['categories'] = $categories;
+
+        $form = $this->createFormBuilder(new Contacts())
+            ->add('title', Type\TextType::class)
+            ->add('description', Type\TextareaType::class)
+            ->add('submit', Type\SubmitType::class)
+            ->getForm();
+
+        $data['form'] = $form->createView();
+        return $this->render('MyindexdCatalogBundle:Default:contacts.html.twig', $data);
+    }
+
+    public function contactsStoreAction(Request $request)
     {
         $form = $this->createFormBuilder(new Contacts())
             ->add('title', Type\TextType::class)
@@ -63,7 +86,6 @@ class CatalogController extends Controller
             $em->flush();
         }
 
-        $data['form'] = $form->createView();
-        return $this->render('MyindexdCatalogBundle:Default:contacts.html.twig', $data);
+        return $this->redirectToRoute('myindexd_catalog_contactsStorePage');
     }
 }

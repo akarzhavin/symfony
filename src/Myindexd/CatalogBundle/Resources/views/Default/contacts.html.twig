@@ -1,4 +1,10 @@
-This contacts page!
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+{% extends "MyindexdCatalogBundle:Default:layout.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block content %}
+    <h1>This contacts page!</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}

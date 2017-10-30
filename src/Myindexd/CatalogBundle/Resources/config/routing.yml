@@ -3,10 +3,15 @@ myindexd_catalog_homepage:
     defaults: { _controller: MyindexdCatalogBundle:Catalog:index }
     methods: [GET]
 
-myindexd_catalog_contacts:
+myindexd_catalog_contactsShowPage:
     path:     /contacts
-    defaults: { _controller: MyindexdCatalogBundle:Catalog:contacts }
-    methods: [GET, POST]
+    defaults: { _controller: MyindexdCatalogBundle:Catalog:contactsShow }
+    methods: [GET]
+
+myindexd_catalog_contactsStorePage:
+    path:     /contacts
+    defaults: { _controller: MyindexdCatalogBundle:Catalog:contactsStore }
+    methods: [POST]
 
 myindexd_catalog_productpage:
     path:     /{slug}.html

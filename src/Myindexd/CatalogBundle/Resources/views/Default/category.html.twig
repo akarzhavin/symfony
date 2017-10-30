@@ -1,3 +1,14 @@
-{{ dump(category) }}
-Hello World!
-This category page!
+{% extends "MyindexdCatalogBundle:Default:layout.html.twig" %}
+
+{% block content %}
+    <h1 style="margin: 0; text-align: center;">{{ category.title }}</h1>
+    {% for product in category.products %}
+        <div style="margin-bottom: 30px;">
+            <a href="/{{ product.slug }}.html">
+            <h5>{{ product.title }}</h5>
+            <h6>{{ product.description }}</h6>
+            <h6>Price: {{ product.price }}</h6>
+            </a>
+        </div>
+    {% endfor %}
+{% endblock %}
